@@ -10,6 +10,7 @@ GEM
     declarative (0.0.10)
     declarative-option (0.1.0)
     diff-lcs (1.3)
+    dotenv (2.7.5)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     figaro (1.1.1)
@@ -115,6 +116,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   figaro
   google-api-client
   omniauth-google-oauth2
