@@ -5,6 +5,7 @@ require 'omniauth-google-oauth2'
 require 'google/api_client/client_secrets.rb'
 require 'google/apis/calendar_v3'
 require './google_service'
+require 'sinatra/json'
 # require 'figaro'
 require 'dotenv'
 
@@ -16,37 +17,38 @@ use OmniAuth::Builder do
 end
 
 class Notifications < Sinatra::Application
-  # register Sinatra::ConfigFile
-  # config_file './config/application.yml'
   
   get '/' do
     'Hello World'
   end
 
   get '/calendar/info?' do
-    GoogleService.get_calendars(params["token"],params["refresh_token"])
+    calendars_info = GoogleService.get_calendars(params["token"],params["refresh_token"])
+    json calendars_info
   end
 
   post '/calendar/new?' do
     calendar = GoogleService.create_new_calendar(params[:token],params[:refresh_token], params[:calendar_name])
-    render json: calendar
+    json calendar
   end
 
   post '/event/new?' do
-    event_info = {
-      token: params[:token],
-      refresh_token: params[:refresh_token],
-      calendar: params[:calendar],
-      name: params[:name],
-      description: params[:description],
-      date: params[:date]
-    }
-    GoogleService.create_event(event_info)
+    event_info = GoogleService.create_event(token: params[:token],
+                                            refresh_token: params[:refresh_token],
+                                            calendar: params[:calendar],
+                                            name: params[:name],
+                                            description: params[:description],
+                                            date: params[:date])
+    json event_info
   end
 
   get '/events/info?' do
-    events = GoogleService.get_list_events(params[:token], params[:refresh_token], params[:calendar_name])
-    render json: events
+    calendar_id = GoogleService.get_calendars(params[:token], params[:refresh_token])[params[:calendar_name]]
+    events = GoogleService.get_list_events(params[:token], params[:refresh_token], calendar_id)
+    events_info = events.map do |event|
+      event.info
+    end
+    json events_info
   end
 
 end

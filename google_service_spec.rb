@@ -17,16 +17,16 @@ RSpec.describe 'Notifications' do
     @calendar_id = GoogleService.get_calendars(@token, @refresh_token)["GardenThatApp"]
   end
 
-  xit "can return calendar information" do
+  it "can return calendar information" do
     list_calendars = ["gardenthat@gmail.com", "GardenThatApp"]
     expect(GoogleService.get_calendars(@token, @refresh_token).keys.to_set).to eq(list_calendars.to_set)
   end
 
-  xit "can create a new calendar" do
+  it "can create a new calendar" do
     expect(GoogleService.get_calendars(@token, @refresh_token).include?('test_calendar')).to eq(false)
     result = GoogleService.create_new_calendar(@token, @refresh_token, 'test_calendar')
     expect(GoogleService.get_calendars(@token, @refresh_token).include?('test_calendar')).to eq(true)
-    GoogleService.delete_calendar(@token, @refresh_token, result.id)
+    GoogleService.delete_calendar(@token, @refresh_token, result[:id])
   end
 
   it "can create a new event in the calendar" do
@@ -43,7 +43,7 @@ RSpec.describe 'Notifications' do
     expect(events.length).to eq(1)
     expect(events[0].name).to eq('Tomato time!!')
     expect(events[0].description).to eq("it's about time you harvest those tomatoes")
-    GoogleService.delete_event(@token, @refresh_token, @calendar_id, result.id)
+    GoogleService.delete_event(@token, @refresh_token, @calendar_id, result[:id])
   end
 
   it "can get return a list of events for a calendar" do
@@ -71,8 +71,8 @@ RSpec.describe 'Notifications' do
     expect(events[0].name).to eq(event1_info[:name]) 
     expect(events[1].name).to eq(event2_info[:name])
 
-    GoogleService.delete_event(@token, @refresh_token, @calendar_id, event1.id)
-    GoogleService.delete_event(@token, @refresh_token, @calendar_id, event2.id)
+    GoogleService.delete_event(@token, @refresh_token, @calendar_id, event1[:id])
+    GoogleService.delete_event(@token, @refresh_token, @calendar_id, event2[:id])
   end
 
 

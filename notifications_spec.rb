@@ -18,7 +18,7 @@ RSpec.describe 'Notifications' do
     expect(last_response.body).to eq('Hello World')
   end
 
-  xit "can create a new calendar" do
+  it "can create a new calendar" do
     token = ENV['TEST_USER_GOOGLE_TOKEN']
     refresh_token = ENV['TEST_USER_GOOGLE_REFRESH_TOKEN']
     expect(GoogleService.get_calendars(token, refresh_token).include?('test_calendar')).to eq(false)
@@ -42,6 +42,37 @@ RSpec.describe 'Notifications' do
     expect(events[0].start[0..9]).to eq('2020-05-23')
     expect(events[0].end[0..9]).to eq('2020-05-23')
     GoogleService.delete_event(token, refresh_token, calendar_id, events[0].id)
+  end
+
+  it "can get a list of events" do
+    token = ENV['TEST_USER_GOOGLE_TOKEN']
+    refresh_token = ENV['TEST_USER_GOOGLE_REFRESH_TOKEN']
+    calendar_id = GoogleService.get_calendars(token, refresh_token)["GardenThatApp"]
+    event1_info = {
+      token: token,
+      refresh_token: refresh_token,
+      calendar: 'GardenThatApp',
+      name: 'Tomato time!!',
+      description: "it's about time you harvest those tomatoes",
+      date: '2020-05-28'
+    }
+    event1 = GoogleService.create_event(event1_info)
+    event2_info = {
+      token: token,
+      refresh_token: refresh_token,
+      calendar: 'GardenThatApp',
+      name: 'Mint time!!',
+      description: "Your mint will be just right in about 10 days",
+      date: '2020-06-05'
+    }
+    event2 = GoogleService.create_event(event2_info)
+
+    events = GoogleService.get_list_events(token, refresh_token, calendar_id)
+
+    get "/events/info?token=#{token}&refresh_token=#{refresh_token}&calendar_name=GardenThatApp"
+  
+    GoogleService.delete_event(token, refresh_token, calendar_id, events[0].id)
+    GoogleService.delete_event(token, refresh_token, calendar_id, events[1].id)
   end
 
 
