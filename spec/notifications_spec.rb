@@ -35,7 +35,7 @@ RSpec.describe 'Notifications' do
   it "can create a new event" do
     events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
     expect(events.empty?).to eq(true)
-    post "/event/new?token=#{@token}&refresh_token=#{@refresh_token}&calendar=GardenThatApp&name=test_event&description=an_event_description&date=2020-05-23"
+    post "/event/new?token=#{@token}&refresh_token=#{@refresh_token}&calendar_id=#{@calendar_id}&name=test_event&description=an_event_description&date=2020-05-23"
     events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
     expect(events.length).to eq(1)
     expect(events[0].name).to eq('test_event')
@@ -49,7 +49,7 @@ RSpec.describe 'Notifications' do
     event1_info = {
       token: @token,
       refresh_token: @refresh_token,
-      calendar: 'GardenThatApp',
+      calendar_id: @calendar_id,
       name: 'Tomato time!!',
       description: "it's about time you harvest those tomatoes",
       date: '2020-05-28'
@@ -58,7 +58,7 @@ RSpec.describe 'Notifications' do
     event2_info = {
       token: @token,
       refresh_token: @refresh_token,
-      calendar: 'GardenThatApp',
+      calendar_id: @calendar_id,
       name: 'Mint time!!',
       description: "Your mint will be just right in about 10 days",
       date: '2020-06-05'
