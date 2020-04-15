@@ -33,7 +33,7 @@ RSpec.describe 'Notifications' do
     event_info = {
       token: @token,
       refresh_token: @refresh_token,
-      calendar: 'GardenThatApp',
+      calendar_id: @calendar_id,
       name: 'Tomato time!!',
       description: "it's about time you harvest those tomatoes",
       date: '2020-05-28'
@@ -50,7 +50,7 @@ RSpec.describe 'Notifications' do
     event1_info = {
       token: @token,
       refresh_token: @refresh_token,
-      calendar: 'GardenThatApp',
+      calendar_id: @calendar_id,
       name: 'Tomato time!!',
       description: "it's about time you harvest those tomatoes",
       date: '2020-05-28'
@@ -59,7 +59,7 @@ RSpec.describe 'Notifications' do
     event2_info = {
       token: @token,
       refresh_token: @refresh_token,
-      calendar: 'GardenThatApp',
+      calendar_id: @calendar_id,
       name: 'Mint time!!',
       description: "Your mint will be just right in about 10 days",
       date: '2020-06-05'
