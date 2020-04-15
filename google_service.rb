@@ -39,8 +39,7 @@ class GoogleService < Sinatra::Base
         time_zone: 'America/Los_Angeles'
         )
       )
-    calendar_id = GoogleService.get_calendars(info[:token], info[:refresh_token])[info[:calendar]]
-    result = service.insert_event(calendar_id, event)
+    result = service.insert_event(info[:calendar_id], event)
     return {summary: result.summary, description: result.description, id: result.id}
   end
 
