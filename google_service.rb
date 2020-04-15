@@ -26,7 +26,6 @@ class GoogleService < Sinatra::Base
   end
 
   def self.create_event(info)
-
     service = refresh_authorization(info[:token], info[:refresh_token])
     event = Google::Apis::CalendarV3::Event.new(
       summary: info[:name],
@@ -55,11 +54,7 @@ class GoogleService < Sinatra::Base
     now = Time.now.iso8601
     service = refresh_authorization(token, refresh_token)
     items = service.fetch_all do |token|
-      service.list_events(calendar_id,
-                          single_events: true,
-                          order_by: 'startTime',
-                          time_min: now,
-                          page_token: token)
+      service.list_events(calendar_id, single_events: true, order_by: 'startTime', time_min: now, page_token: token)
     end
     events = items.map do |item|
       Event.new(name: item.summary, start: item.start, end: item.end, description: item.description, id: item.id)
