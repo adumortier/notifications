@@ -1,0 +1,7 @@
+language:
+  - ruby
+rbenv:
+  - 2.4.1
+dist: trusty
+script:
+- bundle exec rspec
