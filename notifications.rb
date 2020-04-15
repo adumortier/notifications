@@ -1,12 +1,10 @@
 require 'sinatra'
-# require 'sinatra/config_file'
 require 'omniauth'
 require 'omniauth-google-oauth2'
 require 'google/api_client/client_secrets.rb'
 require 'google/apis/calendar_v3'
 require './google_service'
 require 'sinatra/json'
-# require 'figaro'
 require 'dotenv'
 
 use Rack::Session::Cookie
