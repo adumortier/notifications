@@ -33,7 +33,7 @@ class Notifications < Sinatra::Application
   post '/event/new?' do
     event_info = GoogleService.create_event(token: params[:token],
                                             refresh_token: params[:refresh_token],
-                                            calendar: params[:calendar],
+                                            calendar_id: params[:calendar_id],
                                             name: params[:name],
                                             description: params[:description],
                                             date: params[:date])
