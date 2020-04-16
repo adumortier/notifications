@@ -6,6 +6,7 @@ require 'google/apis/calendar_v3'
 require './google_service'
 require 'sinatra/json'
 require 'dotenv'
+require './config/environment'
 
 use Rack::Session::Cookie
 
