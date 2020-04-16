@@ -51,8 +51,6 @@ class Notifications < Sinatra::Application
 
   delete '/event/info?' do
     GoogleService.delete_event(params[:token], params[:refresh_token], params[:calendar_id], params[:event_id])
-    json event
   end
-
 
 end
