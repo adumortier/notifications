@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require './event'
+require './config/environment'
 
 class GoogleService < Sinatra::Base
 
