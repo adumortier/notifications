@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require './event'
+require './config/environment'
 
 class GoogleService < Sinatra::Base
 
@@ -50,7 +51,7 @@ class GoogleService < Sinatra::Base
 
   def self.delete_event(token, refresh_token, calendar_id, event_id)
      service = refresh_authorization(token, refresh_token)
-     result = service.delete_event(calendar_id, event_id)
+     service.delete_event(calendar_id, event_id)
   end
 
   def self.get_list_events(token, refresh_token, calendar_id)

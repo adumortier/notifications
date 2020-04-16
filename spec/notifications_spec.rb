@@ -41,7 +41,7 @@ RSpec.describe 'Notifications' do
     expect(events[0].name).to eq('test_event')
     expect(events[0].description).to eq('an_event_description')
     expect(events[0].start[0..9]).to eq('2020-05-23')
-    expect(events[0].end[0..9]).to eq('2020-05-23')
+    expect(events[0].end[0..9]).to eq('2020-05-24')
     GoogleService.delete_event(@token, @refresh_token, @calendar_id, events[0].id)
   end
 

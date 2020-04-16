@@ -19,7 +19,7 @@ RSpec.describe 'Notifications' do
   end
 
   it "can return calendar information" do
-    list_calendars = ["gardenthat@gmail.com", "GardenThatApp"]
+    list_calendars = ["gardenthattesting@gmail.com", "GardenThatApp"]
     expect(GoogleService.get_calendars(@token, @refresh_token).keys.to_set).to eq(list_calendars.to_set)
   end
 
