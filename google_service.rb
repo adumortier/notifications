@@ -25,6 +25,11 @@ class GoogleService < Sinatra::Base
     service.delete_calendar(name)
   end
 
+  def self.delete_event(token, refresh_token, calendar_id, event_id)
+    service = refresh_authorization(token, refresh_token)
+    service.delete_calendar(calendar_id, event_id)
+  end
+
   def self.create_event(info)
     service = refresh_authorization(info[:token], info[:refresh_token])
     event = Google::Apis::CalendarV3::Event.new(
@@ -45,7 +50,7 @@ class GoogleService < Sinatra::Base
 
   def self.delete_event(token, refresh_token, calendar_id, event_id)
      service = refresh_authorization(token, refresh_token)
-     service.delete_event(calendar_id, event_id)
+     result = service.delete_event(calendar_id, event_id)
   end
 
   def self.get_list_events(token, refresh_token, calendar_id)

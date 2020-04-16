@@ -3,6 +3,7 @@ ENV['APP_ENV'] = 'test'
 require './notifications'
 require 'rspec'
 require 'rack/test'
+require './config/environment'
 
 RSpec.describe 'Notifications' do
   include Rack::Test::Methods
@@ -46,6 +47,24 @@ RSpec.describe 'Notifications' do
     GoogleService.delete_event(@token, @refresh_token, @calendar_id, result[:id])
   end
 
+  it "can delete an event in the calendar" do
+    event_info = {
+      token: @token,
+      refresh_token: @refresh_token,
+      calendar_id: @calendar_id,
+      name: 'Tomato time!!',
+      description: "it's about time you harvest those tomatoes",
+      date: '2020-05-28'
+    }
+    result = GoogleService.create_event(event_info)
+    events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
+    expect(events.length).to eq(1)
+    expect(events[0].name).to eq('Tomato time!!')
+    event = GoogleService.delete_event(@token, @refresh_token, @calendar_id, events[0].id)
+    events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
+    expect(events.length).to eq(0)
+  end
+
   it "can get return a list of events for a calendar" do
     event1_info = {
       token: @token,
@@ -74,8 +93,5 @@ RSpec.describe 'Notifications' do
     GoogleService.delete_event(@token, @refresh_token, @calendar_id, event1[:id])
     GoogleService.delete_event(@token, @refresh_token, @calendar_id, event2[:id])
   end
-
-
-
 
 end
