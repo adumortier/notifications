@@ -45,6 +45,25 @@ RSpec.describe 'Notifications' do
     GoogleService.delete_event(@token, @refresh_token, @calendar_id, events[0].id)
   end
 
+  it "can delete an event" do
+    event1_info = {
+      token: @token,
+      refresh_token: @refresh_token,
+      calendar_id: @calendar_id,
+      name: 'Tomato time!!',
+      description: "it's about time you harvest those tomatoes",
+      date: '2020-05-28'
+    }
+    event1 = GoogleService.create_event(event1_info)
+    events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
+    events_id = events.map {|event| event.id}
+    expect(events_id.include?(event1[:id])).to eq(true)
+    delete "/event/info?token=#{@token}&refresh_token=#{@refresh_token}&calendar_id=#{@calendar_id}&event_id=#{event1[:id]}"
+    events = GoogleService.get_list_events(@token, @refresh_token, @calendar_id)
+    events_id = events.map {|event| event.id}
+    expect(events_id.include?(event1[:id])).to eq(false)
+  end
+
   it "can get a list of events" do
     event1_info = {
       token: @token,
