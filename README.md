@@ -1,4 +1,6 @@
-This notification microservice is used along with the Gard(in)That app. 
+### Notification Microservice
+
+This notification microservice is used along with the Gard(in)That app. It allows the app to interact with the Google Calendar API and send notifications to users when they have added plants to their virtual garden.
 
 Gard(in)That app repository:
 
